@@ -4,7 +4,7 @@ return {
   'romgrk/barbar.nvim',
   dependencies = {
     'lewis6991/gitsigns.nvim',
-    'nvim-tree/nvim-web-devicons',
+    -- nvim-web-devicons loaded separately in plugins/devicons.lua
   },
   init = function()
     vim.g.barbar_auto_setup = false

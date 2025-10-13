@@ -2,6 +2,9 @@
 -- Each plugin is configured in its own file in the plugins/ directory
 
 return {
+  -- Icons (loaded early for other plugins to use)
+  require("plugins.devicons"),
+
   -- LSP configuration
   { "neovim/nvim-lspconfig" },
 
