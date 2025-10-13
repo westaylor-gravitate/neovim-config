@@ -25,4 +25,7 @@ return {
 
   -- DAP (Debug Adapter Protocol)
   require("plugins.dap"),
+
+  -- Barbar tabline
+  require("plugins.barbar"),
 }
