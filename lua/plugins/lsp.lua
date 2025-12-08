@@ -1,4 +1,4 @@
--- LSP configuration
+-- LSP configuration (Neovim 0.11+ native API)
 
 -- Function to find ruff in virtual environment or system
 local function find_ruff()
@@ -23,17 +23,18 @@ local function find_ruff()
   return "ruff"
 end
 
--- Configure LSP servers
-local lspconfig = require('lspconfig')
-
 -- Configure Ruff LSP
-lspconfig.ruff.setup({
+vim.lsp.config.ruff = {
   cmd = { find_ruff(), 'server', '--preview' },
-  settings = {},  -- Ruff expects settings at top level, not nested
-})
+  filetypes = { 'python' },
+  root_markers = { 'pyproject.toml', 'ruff.toml', '.ruff.toml', 'setup.py', '.git' },
+}
 
 -- Configure basedpyright LSP
-lspconfig.basedpyright.setup({
+vim.lsp.config.basedpyright = {
+  cmd = { 'basedpyright-langserver', '--stdio' },
+  filetypes = { 'python' },
+  root_markers = { 'pyproject.toml', 'setup.py', '.git' },
   settings = {
     basedpyright = {
       disableOrganizeImports = true, -- Let Ruff handle imports
@@ -43,7 +44,10 @@ lspconfig.basedpyright.setup({
       }
     }
   }
-})
+}
+
+-- Enable the LSP servers
+vim.lsp.enable({ 'ruff', 'basedpyright' })
 
 -- LSP keybindings - this runs when any LSP attaches to a buffer
 vim.api.nvim_create_autocmd('LspAttach', {
@@ -66,5 +70,4 @@ vim.api.nvim_create_autocmd('LspAttach', {
 vim.keymap.set('n', 'gr', vim.lsp.buf.references, { desc = 'Go to references' })
 
 -- Return empty table since this file doesn't define a plugin spec
--- It just configures LSP using the nvim-lspconfig plugin defined in init.lua
 return {}
