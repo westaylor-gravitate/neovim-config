@@ -57,6 +57,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)              -- Show docs under cursor
     vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, opts) -- Code actions (fixes)
     vim.keymap.set('n', '<leader>f', vim.lsp.buf.format, opts)     -- Format current file
+    vim.keymap.set('v', '<leader>f', vim.lsp.buf.format, opts)     -- Format selection
     vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)    -- Rename symbol
   end,
 })
