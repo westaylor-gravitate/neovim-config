@@ -1,31 +1,8 @@
 -- LSP configuration (Neovim 0.11+ native API)
 
--- Function to find ruff in virtual environment or system
-local function find_ruff()
-  -- Check if we're in a virtual environment
-  local venv = os.getenv("VIRTUAL_ENV")
-  if venv then
-    local venv_ruff = venv .. "/bin/ruff"
-    if vim.fn.executable(venv_ruff) == 1 then
-      return venv_ruff
-    end
-  end
-
-  -- Check common venv locations
-  local possible_venvs = { "./venv/bin/ruff", "./.venv/bin/ruff", "./env/bin/ruff" }
-  for _, path in ipairs(possible_venvs) do
-    if vim.fn.executable(path) == 1 then
-      return path
-    end
-  end
-
-  -- Fall back to system ruff
-  return "ruff"
-end
-
--- Configure Ruff LSP
+-- Configure Ruff LSP (uses global uv tool)
 vim.lsp.config.ruff = {
-  cmd = { find_ruff(), 'server', '--preview' },
+  cmd = { 'ruff', 'server', '--preview' },
   filetypes = { 'python' },
   root_markers = { 'pyproject.toml', 'ruff.toml', '.ruff.toml', 'setup.py', '.git' },
 }
