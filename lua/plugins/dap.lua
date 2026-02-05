@@ -10,7 +10,7 @@ return {
   {
     "mfussenegger/nvim-dap-python",
     config = function()
-      require("dap-python").setup("/home/wesleytaylor/.local/share/uv/tools/debugpy/bin/python")
+      require("dap-python").setup(vim.fn.expand("~") .. "/.local/share/uv/tools/debugpy/bin/python")
       require('dap-python').test_runner = 'pytest'
     end,
   },
