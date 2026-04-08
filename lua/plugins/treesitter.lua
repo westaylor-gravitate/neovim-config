@@ -1,4 +1,5 @@
--- Treesitter configuration for syntax highlighting
+-- Treesitter: parser management + textobjects
+-- Neovim 0.12+ handles highlighting and indentation natively.
 
 return {
   "nvim-treesitter/nvim-treesitter",
@@ -7,27 +8,27 @@ return {
     "nvim-treesitter/nvim-treesitter-textobjects",
   },
   config = function()
-    require("nvim-treesitter.configs").setup({
-      ensure_installed = { "python", "lua", "vim", "vimdoc" },  -- Auto-install these parsers
-      auto_install = true,  -- Auto-install parsers when entering new filetype
-      highlight = {
-        enable = true,
-      },
-      indent = {
-        enable = true,  -- Better indentation support
-      },
-      textobjects = {
-        select = {
-          enable = true,
-          lookahead = true,  -- Jump forward to textobj
-          keymaps = {
-            ["af"] = "@function.outer",  -- around function
-            ["if"] = "@function.inner",  -- inside function
-            ["ac"] = "@class.outer",     -- around class
-            ["ic"] = "@class.inner",     -- inside class
-          },
-        },
-      },
+    vim.api.nvim_create_autocmd("FileType", {
+      callback = function(args)
+        pcall(vim.treesitter.start, args.buf)
+      end,
     })
+
+    require("nvim-treesitter-textobjects").setup({
+      select = { lookahead = true },
+    })
+
+    local select = require("nvim-treesitter-textobjects.select")
+    local maps = {
+      ["af"] = "@function.outer",
+      ["if"] = "@function.inner",
+      ["ac"] = "@class.outer",
+      ["ic"] = "@class.inner",
+    }
+    for key, query in pairs(maps) do
+      vim.keymap.set({ "x", "o" }, key, function()
+        select.select_textobject(query)
+      end)
+    end
   end,
 }

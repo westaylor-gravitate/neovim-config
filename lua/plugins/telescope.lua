@@ -2,7 +2,7 @@
 
 return {
   "nvim-telescope/telescope.nvim",
-  tag="0.1.8",
+  branch = "master",
   dependencies = { "nvim-lua/plenary.nvim" },
   config = function()
     local builtin = require('telescope.builtin')
@@ -12,7 +12,10 @@ return {
         file_ignore_patterns = {
           "%.pyc$",
           "__pycache__/",
-        }
+        },
+        preview = {
+          treesitter = true,
+        },
       }
     })
 
