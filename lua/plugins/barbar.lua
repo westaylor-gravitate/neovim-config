@@ -22,6 +22,8 @@ return {
     -- Keybindings for switching buffers
     vim.keymap.set('n', '<leader>t<Left>', '<Cmd>BufferPrevious<CR>', { desc = 'Go to previous buffer' })
     vim.keymap.set('n', '<leader>t<Right>', '<Cmd>BufferNext<CR>', { desc = 'Go to next buffer' })
+    vim.keymap.set('n', '<leader>th', '<Cmd>BufferPrevious<CR>', { desc = 'Go to previous buffer' })
+    vim.keymap.set('n', '<leader>tl', '<Cmd>BufferNext<CR>', { desc = 'Go to next buffer' })
 
     -- Close current buffer
     vim.keymap.set('n', '<leader>tq', '<Cmd>BufferClose<CR>', { desc = 'Close current buffer' })
